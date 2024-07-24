@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+    <title>File Upload</title>
+    <link href="static/style.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Upload new Files</h1>
+    <form id="upload-form" enctype="multipart/form-data">
+        <input type="file" name="files[]" multiple>
+        <input type="submit" value="Upload">
+    </form>
+    <div id="progress-wrapper" style="display: none;">
+        <progress id="progress-bar" value="0" max="100"></progress>
+        <span id="progress-text">0%</span>
+    </div>
+
+    <h2>Files</h2>
+    <ul>
+        {% for file in files %}
+            <li><a href="{{ url_for('download_file', filename=file) }}">{{ file }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('POST', '/upload', true);
+
+            xhr.upload.onprogress = function(event) {
+                if (event.lengthComputable) {
+                    const percentComplete = (event.loaded / event.total) * 100;
+                    document.getElementById('progress-wrapper').style.display = 'block';
+                    document.getElementById('progress-bar').value = percentComplete;
+                    document.getElementById('progress-text').innerText = percentComplete.toFixed(2) + '%';
+                }
+            };
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    alert('Files uploaded successfully!');
+                    window.location.reload();
+                } else {
+                    alert('Error uploading files.');
+                }
+            };
+
+            xhr.send(formData);
+        });
+    </script>
+</body>
+</html>
