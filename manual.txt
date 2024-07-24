@@ -1,0 +1,7 @@
+NOTE: only try it if you have problem with usb cable or when cable not available. It is an easy way.
+1) Download the nearby.zip file and unzip it.
+2) First just connect your mobile with pc through hotspot.
+3) Run the client.py file by using command "python client.py" in terminal.
+4) Then look the output there is a link specified with your laptops ip like 192.xxx.xxx.xxx:xxxx.
+5) Just paste this link in your mobile and click the three dot menu items in chrome and add it to home screen.
+6) And then you can upload and download file between your phone and laptop without internet.
